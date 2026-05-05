@@ -1,5 +1,5 @@
  - name: Copy mongo.repo to remote host
-    ansible.builtin.copy:
+   ansible.builtin.copy:
       src: mongo.repo
       dest: /etc/yum.repos.d/mongo.repo
 
