@@ -1,0 +1,22 @@
+ - name: Copy mongo.repo to remote host
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+ - name: Install mongodb server
+   ansible.builtin.package:
+      name: mongodb-org # to install mongodb use cmd dnf install mongodb-org -y 
+      state: present
+
+      # At last Update listen address from 127.0.0.1 to 0.0.0.0 in /etc/mongod.conf so here we are replacing.
+ - name: Allow all remote connectins 
+   ansible.builtin.replace:
+      path: /etc/mongod.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
+
+ - name: Start and enable mongodb service
+   ansible.builtin.service:
+      name: mongod # systemctl enable mongod  systemctl start mongod 
+      state: started
+      enabled: yes
